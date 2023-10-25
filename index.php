@@ -55,7 +55,14 @@
         shuffle($sequence); 
        # echo "<p>" . var_dump($sequence) . "</p>"; 
     ?>
-        <?php $questionNumber = rand(0,count($questionsAnswers)) ?>
+        <?php 
+            $questionNumber = rand(0,count($questionsAnswers)-1);  
+            if(count($questionsAnswers[$questionNumber])!=4){
+                // if the question does not have the syntax Q,A,A,A let's continue to another one. 
+                $x--; 
+                continue; 
+            }
+        ?>
         <p><?= $questionsAnswers[$questionNumber][0] ?></p>
         <?php 
         for($answeroptionindex=0; $answeroptionindex<3; $answeroptionindex++){
@@ -74,7 +81,7 @@
         ?>
         <div class="<?=$class?>">
             <label>
-                <input type="radio" name="answer<?=$x?>" value="<?=$value?>"   >
+                <input type="radio" name="answer<?=$x?>" value="<?=$option?>"   >
             </label>
             <?= $questionsAnswers[$questionNumber][$option] ?>
         </div>
