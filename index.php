@@ -51,26 +51,36 @@
 <form action="index.php" method="post">
     <?php
     for($x=1; $x<=3; $x++){ 
+        $sequence=[1,2,3]; 
+        shuffle($sequence); 
+       # echo "<p>" . var_dump($sequence) . "</p>"; 
     ?>
         <?php $questionNumber = rand(0,count($questionsAnswers)) ?>
         <p><?= $questionsAnswers[$questionNumber][0] ?></p>
+        <?php 
+        for($answeroptionindex=0; $answeroptionindex<3; $answeroptionindex++){
 
-        <div class="<?=$classGreen?>">
+            // $class="redFalse"; // like this we will have the color already without answers
+            $class=$classRed; 
+            $value="Falsch"; 
+            // which option will we show now? 
+            $option=$sequence[$answeroptionindex];
+            // $option will be 1 (the correct one), 2 or 3 (the wrong ones)
+            if($option==1){
+                //$class="greenCorrect"; // like this we will have the color already without answers
+                $class=$classGreen; 
+                $value="Korrekt"; 
+            } 
+        ?>
+        <div class="<?=$class?>">
             <label>
-                <input type="radio" name="answer<?=$x?>" value="Korrekt"   >
+                <input type="radio" name="answer<?=$x?>" value="<?=$value?>"   >
             </label>
-            <?= $questionsAnswers[$questionNumber][1] ?>
+            <?= $questionsAnswers[$questionNumber][$option] ?>
         </div>
-        <div class="<?=$classRed?>">
-            <label>
-                <input type="radio" name="answer<?=$x?>" value="Falsch"    >
-            </label>
-            <?= $questionsAnswers[$questionNumber][2] ?> <br>
-            <label>
-                <input type="radio" name="answer<?=$x?>" value="Falsch"     >
-            </label>
-            <?= $questionsAnswers[$questionNumber][3] ?> <br>
-        </div>
+
+        
+        <?php }?>
         <br>
     <?php }?>
 
